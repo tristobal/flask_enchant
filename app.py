@@ -40,3 +40,9 @@ def get_user(letters):
                 final_list.extend(list_)
         result[i] = list(set(final_list))
     return jsonify(result)
+
+@app.route('/test')
+def test():
+    broker = enchant.Broker()
+    print(broker.describe())
+    return 'test'
