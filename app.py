@@ -43,6 +43,7 @@ def get_user(letters):
 
 @app.route('/test')
 def test():
+    print(d.provider.name)
     broker = enchant.Broker()
     print(broker.describe())
     return 'test'
