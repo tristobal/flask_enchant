@@ -2,3 +2,11 @@ libenchant-dev
 aspell-es
 hunspell-es
 myspell-es
+aspell
+dictionaries-common
+emacsen-common
+enchant
+libaspell15
+libenchant1c2a
+libhunspell-1.6-0
+libtext-iconv-perl
