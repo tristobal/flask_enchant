@@ -4,8 +4,6 @@ import enchant
 
 app = Flask(__name__)
 
-d = enchant.Dict('es')
-
 
 def prepare_list(word_):
     new_letters = [word_]
@@ -28,6 +26,8 @@ def extract_words(word_, size_):
 
 @app.route('/<letters>', methods=['GET'])
 def get_user(letters):
+    d = enchant.Dict('es')
+
     size = len(letters) + 1
     list_words = prepare_list(letters)
 
@@ -43,7 +43,12 @@ def get_user(letters):
 
 @app.route('/test')
 def test():
-    print(d.provider.name)
+    # print(d.provider.name)
+
     broker = enchant.Broker()
+    print('broker.describe()')
     print(broker.describe())
+
+    print('enchant.list_languages()')
+    print(enchant.list_languages())
     return 'test'
