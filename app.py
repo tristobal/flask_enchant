@@ -49,7 +49,7 @@ def config():
 
     broker = enchant.Broker()
     return {
-        'provider': str(d.provider.name),
+        #'provider': str(d.provider.name),
         'brokers': str(broker.describe()),
         'list_languages': enchant.list_languages(),
         'enchant_config_dir': os.environ.get('ENCHANT_CONFIG_DIR')
