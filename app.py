@@ -47,8 +47,8 @@ def get_user(letters):
     return jsonify(result)
 
 
-@app.route('/test')
-def test():
+@app.route('/config', methods=['GET'])
+def config():
     # print(d.provider.name)
 
     broker = enchant.Broker()
@@ -58,3 +58,16 @@ def test():
         'list_languages': enchant.list_languages(),
         'enchant_config_dir': os.environ.get('ENCHANT_CONFIG_DIR')
     }
+
+
+@app.route('/test', methods=['GET'])
+def test():
+    path = os.environ.get('ENCHANT_CONFIG_DIR')
+    return {
+        'response': os.path.abspath(path)
+    }
+
+
+@app.route('/', methods=['GET'])
+def main():
+    return 'UP'
