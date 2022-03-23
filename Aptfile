@@ -1,7 +1,8 @@
 libenchant-dev
 #aspell-es
-#hunspell-es
-myspell-es
+hunspell
+hunspell-es
+#myspell-es
 #aspell
 #dictionaries-common
 #emacsen-common

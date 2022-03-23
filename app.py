@@ -1,9 +1,14 @@
 from flask import Flask, jsonify
 from itertools import permutations
 import enchant
+import os
 
 app = Flask(__name__)
 
+
+
+#os.environ.set('ENCHANT_CONFIG_DIR', os.path.abspath('dicts/'))
+d = enchant.Dict('es')
 
 def prepare_list(word_):
     new_letters = [word_]
@@ -41,14 +46,15 @@ def get_user(letters):
         result[i] = list(set(final_list))
     return jsonify(result)
 
+
 @app.route('/test')
 def test():
     # print(d.provider.name)
 
     broker = enchant.Broker()
-    print('broker.describe()')
-    print(broker.describe())
-
-    print('enchant.list_languages()')
-    print(enchant.list_languages())
-    return 'test'
+    return {
+        'provider': str(d.provider.name),
+        'brokers': str(broker.describe()),
+        'list_languages': enchant.list_languages(),
+        'enchant_config_dir': os.environ.get('ENCHANT_CONFIG_DIR')
+    }
