@@ -6,10 +6,6 @@ import os
 app = Flask(__name__)
 
 
-
-#os.environ.set('ENCHANT_CONFIG_DIR', os.path.abspath('dicts/'))
-d = enchant.Dict('es')
-
 def prepare_list(word_):
     new_letters = [word_]
     for i_, letter in enumerate(word_, start=0):
@@ -20,11 +16,11 @@ def prepare_list(word_):
     return new_letters
 
 
-def extract_words(word_, size_):
+def extract_words(word_, size_, dict_):
     words = set()
     for p in permutations(word_, size_):
         w = "".join(p)
-        if d.check(w):
+        if dict_.check(w):
             words.add(w)
     return words
 
@@ -40,7 +36,7 @@ def get_user(letters):
     for i in range(3, size):
         final_list = []
         for word in list_words:
-            list_ = extract_words(word, i)
+            list_ = extract_words(word, i, d)
             if len(list_) > 0:
                 final_list.extend(list_)
         result[i] = list(set(final_list))
