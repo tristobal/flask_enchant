@@ -5,15 +5,28 @@ import os
 
 app = Flask(__name__)
 
+# Workaround of: 'a' + u'\u0301' != 'á'
+LETTERS_WITH_ACCENTS = {
+    'a': 'á',
+    'e': 'é',
+    'i': 'í',
+    'o': 'ó',
+    'u': 'ú',
+}
+
+
+def change_letter_at_index(word, letter, index):
+    return word[:index] + letter + word[index + 1:]
+
 
 def prepare_list(word_):
-    new_letters = [word_]
+    new_words = [word_]
     for i_, letter in enumerate(word_, start=0):
         if letter in 'aeiou':
-            new_letter = letter + u'\u0301'
-            new_word = word_[:i_] + new_letter + word_[i_ + 1:]
-            new_letters.append(new_word)
-    return new_letters
+            letter_with_accent = LETTERS_WITH_ACCENTS[letter]
+            new_word = change_letter_at_index(word_, letter_with_accent, i_)
+            new_words.append(new_word)
+    return new_words
 
 
 def extract_words(word_, size_, dict_):
@@ -49,7 +62,7 @@ def config():
 
     broker = enchant.Broker()
     return {
-        #'provider': str(d.provider.name),
+        # 'provider': str(d.provider.name),
         'brokers': str(broker.describe()),
         'list_languages': enchant.list_languages(),
         'enchant_config_dir': os.environ.get('ENCHANT_CONFIG_DIR')
