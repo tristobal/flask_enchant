@@ -38,45 +38,44 @@ def extract_words(word_, size_, dict_):
     return words
 
 
-@app.route('/<letters>', methods=['GET'])
-def get_user(letters):
+@app.route('/words/<letters>', methods=['GET'])
+def get_words(letters):
+    # TODO Move this to top level of the file
     d = enchant.Dict('es')
 
     size = len(letters) + 1
     list_words = prepare_list(letters)
 
+    print(f'Searching words from: {list_words}')
+
     result = {}
     for i in range(3, size):
+        print(f'Searching words with {i} letters')
         final_list = []
         for word in list_words:
             list_ = extract_words(word, i, d)
             if len(list_) > 0:
                 final_list.extend(list_)
         result[i] = list(set(final_list))
+
+    print(f'{len({x for v in result.values() for x in v})} words found')
     return jsonify(result)
 
 
 @app.route('/config', methods=['GET'])
 def config():
-    # print(d.provider.name)
-
     broker = enchant.Broker()
     return {
-        # 'provider': str(d.provider.name),
         'brokers': str(broker.describe()),
         'list_languages': enchant.list_languages(),
         'enchant_config_dir': os.environ.get('ENCHANT_CONFIG_DIR')
     }
 
 
-@app.route('/test', methods=['GET'])
-def test():
-    path = os.environ.get('ENCHANT_CONFIG_DIR')
-    return {
-        'response': os.path.abspath(path)
-    }
-
-
 @app.route('/', methods=['GET'])
 def main():
     return 'UP'
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port='5000')
