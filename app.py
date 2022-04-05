@@ -57,7 +57,8 @@ def get_words(letters):
             list_ = extract_words(word, i, d)
             if len(list_) > 0:
                 final_list.extend(list_)
-        result[i] = list(set(final_list))
+        if len(final_list) > 0:
+            result[i] = sorted(list(set(final_list)))
 
     print(f'{len({x for v in result.values() for x in v})} words found')
     return jsonify(result)
@@ -79,5 +80,5 @@ def main():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
