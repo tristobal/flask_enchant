@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from itertools import permutations
 import enchant
 import os
@@ -76,7 +76,7 @@ def config():
 
 @app.route('/', methods=['GET'])
 def main():
-    return 'UP'
+    return render_template("index.html")
 
 
 if __name__ == "__main__":

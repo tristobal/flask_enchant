@@ -24,6 +24,7 @@
         </form>
       </div>
 
+        <!--
       <div class="row">
         <div class="col">
           <br/>
@@ -47,8 +48,15 @@
           </div>
         </div>
       </div>
-    
-    </div>
+        -->
+
+        <div class="row">
+            <div class="col">
+                <br/>
+                <textarea class="form-control" id="text_area_ex" rows="5"></textarea>
+            </div>
+        </div>
+
 
     </div>
 
@@ -64,9 +72,9 @@
         $("#btn_buscar").on("click", function(e) {
             e.preventDefault();
             $.ajax({type: "GET",
-                url: "http://127.0.0.1:5000/words/" + $("#label_text").val(),
+                url: "/words/" + $("#label_text").val(),
                 success:function(result) {
-                  alert('result');
+                  $("#text_area_ex").val(JSON.stringify(result, null, 2));
                 },
                 error:function(result) {
                   console.log(result)
